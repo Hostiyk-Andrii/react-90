@@ -1,16 +1,15 @@
+import { PilotList } from './PilotList';
+import pilots from './pilots.json';
+import { FaBeer } from 'react-icons/fa';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template vbh
+    <div>
+      <h1>
+        Top rated pilots <FaBeer  />
+      </h1>
+
+      <PilotList pilots={pilots} />
     </div>
   );
 };
