@@ -13,6 +13,7 @@ const getBgColor = props => { switch (props.$variant) {
 
 export const TitlePage = styled.h1`
   margin-top: 0;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
+  margin-bottom: ${p=>p.theme.spacing(6)};
   background-color: ${getBgColor};
 `;

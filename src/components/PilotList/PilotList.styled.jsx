@@ -5,6 +5,6 @@ export const List = styled.ul`
     margin: 0;
     display: flex;
     list-style:none;
-    gap: 50px`
+    gap: ${p=>p.theme.spacing(3)}`
         
     
