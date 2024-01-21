@@ -1,4 +1,4 @@
-import {Topic,Wrapper,MetaWrapper,Text,Buttot} from './QuizCard.styled';
+import {Topic,Wrapper,MetaWrapper,Text, Button} from './QuizCard.styled';
 export const QuizCard = ({ item: { id, topic, level, time, questions } }) => {
   return (
     <Wrapper level={level}>
@@ -16,7 +16,7 @@ export const QuizCard = ({ item: { id, topic, level, time, questions } }) => {
           <b>Questions:</b>
           {questions}
                     </Text>
-                    <Buttot>Delete</Buttot>
+                    <Button>Delete</Button>
       </MetaWrapper>
     </Wrapper>
   );
