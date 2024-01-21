@@ -1,23 +1,57 @@
+import { Component } from 'react';
+import { GlobalStyle } from './GlobalStyle';
+import items from './quiz-items.json';
+import { SearchBar } from './SearchBar';
+import { QuizList } from './QuizList/QuizList';
 
-import { GlobalStyle} from './GlobalStyle';
-import { PilotList } from './PilotList/PilotList';
-import pilots from './pilots.json';
-import styled from 'styled-components';
+export class App extends Component {
+  state = {
+    quizItems: items,
+    filters: {
+      topic: '',
+      level: 'all',
+    },
+  };
+  updateTopicFilter = newTopic => {
+    this.setState(prevState => ({
+      filters: {
+        ...prevState.filters,
+        topic: newTopic,
+      },
+    }));
+  };
+  updateLevelFilter = newLevel => {
+    this.setState(prevState => ({
+      filters: {
+        ...prevState.filters,
+        level: newLevel,
+      },
+    }));
+  };
 
-const TitlePage=styled.h1`
-margin-top:0;
-margin-bottom:24px;
-background-color:orange`
-export const App = () => {
-  return (
-    <div>
-      <TitlePage>
-        Top rated pilots 
-      </TitlePage>
+  render() {
+    const { quizItems, filters } = this.state;
+    const visibleQuizItems = quizItems.filter(item => {
+      const hasTopic = item.topic
+        .toLowerCase()
+        .includes(filters.topic.toLowerCase());
+      if (filters.level === 'all') {
+        return hasTopic;
+      }
+      const matchesLevel = item.level === filters.level;
+      return hasTopic && matchesLevel;
+    });
+    return (
+      <div>
+        <SearchBar
+          filters={filters}
+          onUpdateTopic={this.updateTopicFilter}
+          onUpdateLevel={this.updateLevelFilter}
+        />
+        {quizItems.length > 0 && <QuizList items={visibleQuizItems} />}
 
-      <PilotList pilots={pilots} />
-      <GlobalStyle />
-
-    </div>
-  );
-};
+        <GlobalStyle />
+      </div>
+    );
+  }
+}
