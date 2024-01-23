@@ -3,6 +3,7 @@ import { GlobalStyle } from './GlobalStyle';
 import items from './quiz-items.json';
 import { SearchBar } from './SearchBar';
 import { QuizList } from './QuizList/QuizList';
+import { QuizForm } from './QuizForm/QuizForm';
 ;
 
 export class App extends Component {
@@ -59,7 +60,7 @@ export class App extends Component {
     });
     return (
       <div>
-       
+       <QuizForm />
         <SearchBar
           filters={filters}
           onUpdateTopic={this.updateTopicFilter}
