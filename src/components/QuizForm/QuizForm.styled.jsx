@@ -24,7 +24,8 @@ import {
   `;
   
   export const ErrorMessage = styled(FormikError)`
-    color: ${p => p.theme.colors.red};
-    font-size: 14px;
+    /* color: ${p => p.theme.colors.red}; */
+    color: red;
+    font-size: 44px;
   `;
 

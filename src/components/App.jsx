@@ -2,9 +2,9 @@ import { Component } from 'react';
 import { GlobalStyle } from './GlobalStyle';
 import items from './quiz-items.json';
 import { SearchBar } from './SearchBar';
+import { nanoid } from 'nanoid';
 import { QuizList } from './QuizList/QuizList';
 import { QuizForm } from './QuizForm/QuizForm';
-;
 
 export class App extends Component {
   state = {
@@ -46,6 +46,15 @@ export class App extends Component {
       };
     });
   };
+  addQuiz = newQuiz => {
+    const quiz = {
+      ...newQuiz,
+      id: nanoid(),
+    };
+    this.setState(prevState => ({
+      quizItems: [...prevState.quizItems, quiz],
+    }));
+  };
   render() {
     const { quizItems, filters } = this.state;
     const visibleQuizItems = quizItems.filter(item => {
@@ -60,7 +69,7 @@ export class App extends Component {
     });
     return (
       <div>
-       <QuizForm />
+        <QuizForm onAdd={this.addQuiz} />
         <SearchBar
           filters={filters}
           onUpdateTopic={this.updateTopicFilter}
