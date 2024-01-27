@@ -6,6 +6,9 @@ import { nanoid } from 'nanoid';
 import { QuizList } from './QuizList/QuizList';
 import { QuizForm } from './QuizForm/QuizForm';
 
+
+const licalStorageKey = 'quiz-filters';
+
 export class App extends Component {
   state = {
     quizItems: items,
@@ -15,7 +18,7 @@ export class App extends Component {
     },
   };
   componentDidMount() {
-    const savedFilters = localStorage.getItem('quiz-filters');
+    const savedFilters = localStorage.getItem(licalStorageKey);
     if (savedFilters !== null) {
       const filters = JSON.parse(savedFilters);
       this.setState({filters})
@@ -24,7 +27,7 @@ export class App extends Component {
   
   componentDidUpdate(prevProps, prevState) {
     if (prevState.filters !== this.state.filters) {
-      localStorage.setItem('quiz-filters',JSON.stringify(this.state.filters))
+      localStorage.setItem(licalStorageKey, JSON.stringify(this.state.filters));
     }
   }
   updateTopicFilter = newTopic => {
