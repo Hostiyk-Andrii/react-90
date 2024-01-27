@@ -14,6 +14,19 @@ export class App extends Component {
       level: 'all',
     },
   };
+  componentDidMount() {
+    const savedFilters = localStorage.getItem('quiz-filters');
+    if (savedFilters !== null) {
+      const filters = JSON.parse(savedFilters);
+      this.setState({filters})
+    }
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.filters !== this.state.filters) {
+      localStorage.setItem('quiz-filters',JSON.stringify(this.state.filters))
+    }
+  }
   updateTopicFilter = newTopic => {
     this.setState(prevState => ({
       filters: {

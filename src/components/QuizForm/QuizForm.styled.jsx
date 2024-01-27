@@ -10,6 +10,7 @@ import {
     flex-direction: column;
     gap: 8px;
     max-width: 320px;
+    margin-left: 20px;
   `;
   
   export const Field = styled(FormikField)`
