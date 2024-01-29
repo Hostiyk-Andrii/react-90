@@ -1,30 +1,38 @@
 import { Component } from 'react';
 import { GlobalStyle } from './GlobalStyle';
-import items from './quiz-items.json';
 import { SearchBar } from './SearchBar';
 import { nanoid } from 'nanoid';
 import { QuizList } from './QuizList/QuizList';
 import { QuizForm } from './QuizForm/QuizForm';
-
+import { fetchQuizzes } from './api';
 
 const licalStorageKey = 'quiz-filters';
 
 export class App extends Component {
   state = {
-    quizItems: items,
+    quizItems: [],
+    isLoading: false,
     filters: {
       topic: '',
       level: 'all',
     },
   };
-  componentDidMount() {
+  async componentDidMount() {
     const savedFilters = localStorage.getItem(licalStorageKey);
     if (savedFilters !== null) {
       const filters = JSON.parse(savedFilters);
-      this.setState({filters})
+      this.setState({ filters });
+    }
+    try {
+      this.setState({ isLoading: true });
+      const initialQuizzes = await fetchQuizzes();
+      this.setState({ quizItems: initialQuizzes });
+    } catch (error) {
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
-  
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.filters !== this.state.filters) {
       localStorage.setItem(licalStorageKey, JSON.stringify(this.state.filters));
@@ -72,7 +80,7 @@ export class App extends Component {
     }));
   };
   render() {
-    const { quizItems, filters } = this.state;
+    const { quizItems, filters,isLoading } = this.state;
     const visibleQuizItems = quizItems.filter(item => {
       const hasTopic = item.topic
         .toLowerCase()
@@ -92,6 +100,7 @@ export class App extends Component {
           onUpdateLevel={this.updateLevelFilter}
           onReset={this.resetFilters}
         />
+        {isLoading && <b>Loading......</b>}
         {quizItems.length > 0 && (
           <QuizList items={visibleQuizItems} onDelete={this.deleteQuiz} />
         )}
