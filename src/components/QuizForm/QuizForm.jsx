@@ -1,22 +1,22 @@
-import { Formik} from 'formik';
-import { Form, Field, FormGroup, ErrorMessage } from './QuizForm.styled';
+import { Formik, Field } from 'formik';
+import { Form, FormGroup, ErrorMessage } from './QuizForm.styled';
 import * as Yup from 'yup';
-
 
 const quizSchema = Yup.object().shape({
   topic: Yup.string().min(3, 'Too Short!').required('Required'),
   time: Yup.number().min(10, 'Must be 10 or more').required('Required'),
   questions: Yup.number().min(3, 'At least 3').required('Required'),
-  level: Yup.string().oneOf(['beginer', 'intermediate', 'advenced']).required('Required'),
+  level: Yup.string().oneOf(['beginner', 'intermediate', 'advanced']).required('Required'),
 });
-export const QuizForm = ({onAdd}) => {
+
+export const QuizForm = ({ onAdd }) => {
   return (
     <Formik
       initialValues={{
         topic: '',
         time: 0,
         questions: 0,
-        level: 'beginer',
+        level: 'beginner',
       }}
       validationSchema={quizSchema}
       onSubmit={(values, actions) => {
