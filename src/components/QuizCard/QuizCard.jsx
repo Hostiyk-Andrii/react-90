@@ -35,7 +35,11 @@ export class QuizCard extends Component {
             {questions}
           </Text>
         </MetaWrapper>
-        <Button onClick={() => onDelete(id)}>Delete</Button>
+        <div>
+ <Button onClick={() => onDelete(id)}>Delete</Button>
+ <Button onClick={this.openModal}>Edit</Button>
+
+        </div>
 
         <TopicModal
           isOpen={isModalOpen}
