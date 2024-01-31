@@ -12,12 +12,19 @@ const intialFilters = {
 };
 
 const localStorageKey = 'quiz-filters';
+const getInitialFilters =()=>{const savedFilters = window.localStorage.getItem(localStorageKey);
+  if (savedFilters !== null) {
+    return JSON.parse(savedFilters);
+  }
+  return intialFilters;
+};
 
 export const App = () => {
   const [quizItems, setQuizItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [filters, setFilterst] = useState(intialFilters);
+  const [filters, setFilterst] = useState(getInitialFilters)
+    
 
   const visibleQuizItems = quizItems.filter(item => {
     const hasTopic = item.topic
@@ -78,7 +85,9 @@ export const App = () => {
     }
     getQuizzes();
   }, []);
-  useEffect(()=>{window.localStorage.setItem(localStorageKey, JSON.stringify(filters))},[filters])
+  useEffect(() => {
+    window.localStorage.setItem(localStorageKey, JSON.stringify(filters));
+  }, [filters]);
   return (
     <div>
       <QuizForm onAdd={addQuiz} />
