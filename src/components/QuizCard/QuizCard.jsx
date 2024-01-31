@@ -1,54 +1,38 @@
-import { Component } from 'react';
-import { Topic, Wrapper, MetaWrapper, Text, Button } from './QuizCard.styled';
+import { useState } from 'react';
 import { TopicModal } from 'components/TopicModal';
+import { Topic, Wrapper, MetaWrapper, Text, Button } from './QuizCard.styled';
 
-export class QuizCard extends Component {
-  state = {
-    isModalOpen: false,
-  };
-  openModal = () => {
-    this.setState(prevState => ({
-      isModalOpen: !prevState.isModalOpen,
-    }));
-  };
-  render() {
-    const { isModalOpen } = this.state;
-    const {
-      item: { id, topic, level, time, questions },
-      onDelete,
-    } = this.props;
+export const QuizCard = ({
+  item: { id, topic, level, time, questions },
+  onDelete,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    return (
-      <Wrapper level={level}>
-        <Topic onClick={this.openModal}>{topic}</Topic>
-        <MetaWrapper>
-          <Text>
-            <b>Level:</b>
-            {level}
-          </Text>
-          <Text>
-            <b>Time:</b>
-            {time}
-          </Text>
-          <Text>
-            <b>Questions:</b>
-            {questions}
-          </Text>
-        </MetaWrapper>
-        <div>
- <Button onClick={() => onDelete(id)}>Delete</Button>
- <Button onClick={this.openModal}>Edit</Button>
+  const openModal = () => setIsModalOpen(true);
 
-        </div>
+  const closeModal = () => setIsModalOpen(false);
 
-        <TopicModal
-          isOpen={isModalOpen}
-          toggleModal={this.openModal}
-          topic={topic}
-        />
-      </Wrapper>
-    );
-  }
-}
+  const deleteCard = () => onDelete(id);
 
-// () => {
+  return (
+    <Wrapper level={level}>
+      <Topic>{topic}</Topic>
+      <MetaWrapper>
+        <Text>
+          <b>Level:</b> {level}
+        </Text>
+        <Text>
+          <b>Time:</b> {time}
+        </Text>
+        <Text>
+          <b>Questions:</b> {questions}
+        </Text>
+      </MetaWrapper>
+      <div>
+        <Button onClick={deleteCard}>Delete</Button>
+        <Button onClick={openModal}>Edit</Button>
+      </div>
+      <TopicModal isOpen={isModalOpen} onClose={closeModal} topic={topic} />
+    </Wrapper>
+  );
+};
