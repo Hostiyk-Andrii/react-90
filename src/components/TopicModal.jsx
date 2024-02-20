@@ -11,18 +11,18 @@ const customStyles = {
 };
 Modal.setAppElement('#root');
 
-export const TopicModal = ({ isOpen, topic, toggleModal }) => {
+export const TopicModal = ({ isOpen, topic, onClose }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={toggleModal}
+      onRequestClose={onClose}
       style={customStyles}
       contentLabel="Example Modal"
     >
       <p>
         <b>{topic}</b>
       </p>
-      <button onClick={toggleModal}>Close</button>
+      <button onClick={onClose}>Close</button>
     </Modal>
   );
 };
