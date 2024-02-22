@@ -5,6 +5,20 @@ import toast, { Toaster } from 'react-hot-toast';
 import { QuizForm } from './QuizForm/QuizForm';
 import { useEffect, useState } from 'react';
 import { addNewQuiz, deleteQuizById, fetchQuizzes } from './api';
+import { Route, Routes } from 'react-router-dom';
+
+export const App = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<div>Home</div>}></Route>
+        <Route path="/create" element={<div>Create quiz </div>}></Route>
+        <Route path="/list" element={<div>Quizzes </div>}></Route>
+        <Route path="/list/:quizId" element={<div>Quiz ditals </div>}></Route>
+      </Routes>
+    </div>
+  );
+};
 
 const intialFilters = {
   topic: '',
@@ -12,19 +26,19 @@ const intialFilters = {
 };
 
 const localStorageKey = 'quiz-filters';
-const getInitialFilters =()=>{const savedFilters = window.localStorage.getItem(localStorageKey);
+const getInitialFilters = () => {
+  const savedFilters = window.localStorage.getItem(localStorageKey);
   if (savedFilters !== null) {
     return JSON.parse(savedFilters);
   }
   return intialFilters;
 };
 
-export const App = () => {
+export const App1 = () => {
   const [quizItems, setQuizItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [filters, setFilterst] = useState(getInitialFilters)
-    
+  const [filters, setFilterst] = useState(getInitialFilters);
 
   const visibleQuizItems = quizItems.filter(item => {
     const hasTopic = item.topic
